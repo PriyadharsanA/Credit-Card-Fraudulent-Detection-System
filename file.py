@@ -26,6 +26,7 @@ high_2=df2[df2.is_fraud==0]#Values=553574 records
 low_df2=df2[df2.is_fraud==1]#Values=2145 records
 
 #As it is highly imbalanced, we're going to underfit the records and create new datasets for training and testing respectively
+from sklearn.utils import resample
 high_df1=resample(high_1,replace=True,n_samples=7506)
 new_df1=pd.concat([high_df1,low_df1])#Training set
 
