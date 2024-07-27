@@ -3,3 +3,5 @@ import pandas as pd
 df1=pd.read_csv("C:/Users/User/Desktop/fraudTrain.csv")
 df2=pd.read_csv("C:/Users/User/Desktop/fraudTest.csv")
 
+#Label Encoding
+from sklearn.
