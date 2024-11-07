@@ -28,16 +28,45 @@ low_df2=df2[df2.is_fraud==1]#Values=2145 records
 #As it is highly imbalanced, we're going to underfit the records and create new datasets for training and testing respectively
 from sklearn.utils import resample
 high_df1=resample(high_1,replace=True,n_samples=7506)
-new_df1=pd.concat([high_df1,low_df1])#Training set
+df1=pd.concat([high_df1,low_df1])#Training set
 
 high_df2=resample(high_2,replace=True,n_samples=2145)
-new_df2=pd.concat([high_df2,low_df2])#Testing set
+df2=pd.concat([high_df2,low_df2])#Testing set
 
+# Display basic information
+print(df1.info())
+print(df1.describe())
+print(df1.head())
+
+#Implementing basic visualisations
+# Distribution of transaction amount for fraud vs non-fraud transactions
+plt.figure(figsize=(10,6))
+sns.histplot(df1[df1['is_fraud'] == 1]['amt'], bins=50, color='red', label='Fraud')
+sns.histplot(df1[df1['is_fraud'] == 0]['amt'], bins=50, color='green', label='Non-Fraud')
+plt.title('Transaction Amount Distribution')
+plt.xlabel('Transaction Amount')
+plt.ylabel('Frequency')
+plt.legend()
+plt.show()
+
+# Boxplot for transaction amount based on transaction type
+plt.figure(figsize=(10,6))
+sns.boxplot(x='is_fraud', y='amt', data=df1, palette=['#0f4c75', '#ffa600'])
+plt.title('Transaction Amount Boxplot by Fraud Status')
+plt.xlabel('Fraud Status')
+plt.ylabel('Transaction Amount')
+plt.show()
+
+# Correlation heatmap
+plt.figure(figsize=(12,8))
+sns.heatmap(df1.corr(), annot=True, cmap='coolwarm', fmt='.2f')
+plt.title('Correlation Heatmap')
+plt.show()
 #Divide the set into x_train,y_train,x_test,y_test respectively
-x_train=new_df1.drop(columns='is_fraud')
-y_train=new_df1['is_fraud']
-x_test=new_df2.drop(columns='is_fraud')
-y_test=new_df2['is_fraud']
+x_train=df1.drop(columns='is_fraud')
+y_train=df1['is_fraud']
+x_test=df2.drop(columns='is_fraud')
+y_test=df2['is_fraud']
 
 #Training and testing different models
 #Importing required modules
