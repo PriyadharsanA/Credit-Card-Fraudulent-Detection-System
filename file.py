@@ -62,6 +62,7 @@ plt.figure(figsize=(12,8))
 sns.heatmap(df1.corr(), annot=True, cmap='coolwarm', fmt='.2f')
 plt.title('Correlation Heatmap')
 plt.show()
+
 #Divide the set into x_train,y_train,x_test,y_test respectively
 x_train=df1.drop(columns='is_fraud')
 y_train=df1['is_fraud']
